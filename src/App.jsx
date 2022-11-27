@@ -1,32 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          <h1>"This is a change to view"</h1>
-          <p>"This is just a paragraph element</p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <ul>
-          <li>One</li>
-          <li>Two</li>
-          <li>Three</li>
-        </ul>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props)  {
+    super(props)
+  
+    this.state = {
+      list: ["ready", "set", "GO"],
+      text: "",
+    };
+
+    this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  onSubmit(event) {
+    event.preventDefault();
+
+    let newList = [...this.state.list, this.state.text];
+    this.setState({ list: newList, text: ""});
 }
+
+  render() {
+    return (
+      <div>
+        <h1>Hello World!</h1>
+        <form onSbumit={this.onSubmit}>
+        <input 
+          type="text" 
+          name="text" 
+          id="text" 
+          value={this.state.text}
+          onChange={(event) => this.setState({ text: event.target.value })} 
+        />
+        <button type="submit">Add></button>/button>        
+        </form>
+        <ul>
+          {this.state.list.map((item, idx) => {
+            return <li key={item + idx}>{item}</li>;
+          })}
+          </ul>
+        </div>
+      );
+    }
+  }
 
 export default App;
